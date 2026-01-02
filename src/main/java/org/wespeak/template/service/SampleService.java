@@ -13,26 +13,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SampleService {
 
-    /**
-     * Sample event payload record
-     */
-    public record SampleEventPayload(
-            String id,
-            String message
-    ) {
-    }
+  /** Sample event payload record */
+  public record SampleEventPayload(String id, String message) {}
 
-    /**
-     * Handles sample event processing. This is where business logic should be implemented.
-     *
-     * @param payload The event payload
-     */
-    public void handleSampleEvent(SampleEventPayload payload) {
-        log.info("Processing sample event: {}", payload);
+  /**
+   * Handles sample event processing. This is where business logic should be implemented.
+   *
+   * @param payload The event payload
+   */
+  public void handleSampleEvent(SampleEventPayload payload) {
+    log.info("Processing sample event: {}", payload);
 
-        // TODO: Implement business logic here
-        // Example: save to database, call other services, etc.
+    // TODO: Implement business logic here
+    // Example: save to database, call other services, etc.
 
-        log.info("Sample event processed successfully: {}", payload.id());
-    }
+    log.info("Sample event processed successfully: {}", payload.id());
+  }
 }

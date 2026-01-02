@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class TemplateApplicationTests {
 
-    @Test
-    void contextLoads() {
-        // Verify Spring context loads successfully without external dependencies
-        // Kafka listeners are disabled via application-test.properties
-    }
+  @Test
+  void contextLoads() {
+    // Verify Spring context loads successfully without external dependencies
+    // Kafka listeners are disabled via application-test.properties
+  }
 }
