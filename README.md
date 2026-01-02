@@ -11,7 +11,7 @@ Ce template fournit une base prête à l'emploi pour créer un nouveau microserv
 ### Core Framework
 - **Spring Boot 4.0.x** - Framework de base
 - **Java 21** - Version LTS
-- **Maven** - Gestion des dépendances
+- **Gradle 8.5** - Gestion des dépendances
 - **MongoDB** - Base de données unifiée
 - **Spring Data MongoDB** - Accès aux données
 
@@ -99,7 +99,10 @@ springboot-service-template/
 ├── docs/
 │   ├── API.md                        # Documentation API
 │   └── ARCHITECTURE.md               # Architecture du service
-├── pom.xml                           # Maven configuration
+├── build.gradle                      # Gradle configuration
+├── settings.gradle                   # Gradle settings
+├── gradlew                           # Gradle wrapper (Unix)
+├── gradlew.bat                       # Gradle wrapper (Windows)
 ├── .gitignore
 ├── .dockerignore
 └── README.md
@@ -122,9 +125,8 @@ cd my-new-service
 # Renommer le package Java
 find src -type f -name "*.java" -exec sed -i 's/org.wespeak.template/org.wespeak.myservice/g' {} +
 
-# Mettre à jour pom.xml
-sed -i 's/<artifactId>template-service/<artifactId>my-new-service/g' pom.xml
-sed -i 's/<name>Template Service/<name>My New Service/g' pom.xml
+# Mettre à jour build.gradle
+sed -i "s/rootProject.name = 'template-service'/rootProject.name = 'my-new-service'/g" settings.gradle
 
 # Mettre à jour application.yml
 sed -i 's/spring.application.name: template-service/spring.application.name: my-new-service/g' src/main/resources/application.yml
@@ -164,7 +166,7 @@ LOG_LEVEL=INFO
 docker-compose up -d
 
 # Lancer l'application
-./mvnw spring-boot:run
+./gradlew bootRun
 
 # Accéder à Swagger UI
 open http://localhost:8081/swagger-ui.html

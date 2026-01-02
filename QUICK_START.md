@@ -28,9 +28,8 @@ cd user-service
 # Remplacez 'user' par le nom de votre service
 SERVICE_NAME="user"
 
-# Renommer dans pom.xml
-sed -i "s/template-service/${SERVICE_NAME}-service/g" pom.xml
-sed -i "s/Template Service/${SERVICE_NAME^} Service/g" pom.xml
+# Renommer dans build.gradle / settings.gradle
+sed -i "s/template-service/${SERVICE_NAME}-service/g" settings.gradle
 
 # Renommer le package Java
 find src -type f -name "*.java" -exec sed -i "s/org.wespeak.template/org.wespeak.${SERVICE_NAME}/g" {} +
@@ -95,7 +94,7 @@ docker-compose logs -f kafka
 
 ```bash
 # Lancer l'application
-./mvnw spring-boot:run
+./gradlew bootRun
 
 # Dans un autre terminal, tester les endpoints
 curl http://localhost:8081/actuator/health
@@ -168,13 +167,13 @@ Commence par l'entité [ENTITE_PRINCIPALE].
 **Étape 1: Modèle de données**
 ```
 ✅ Entités + Repositories + Tests
-→ Vérifier: ./mvnw test
+→ Vérifier: ./gradlew test
 ```
 
 **Étape 2: Services**
 ```
 ✅ Logique métier + Cache + Tests
-→ Vérifier: ./mvnw test
+→ Vérifier: ./gradlew test
 ```
 
 **Étape 3: Kafka**
@@ -192,14 +191,14 @@ Commence par l'entité [ENTITE_PRINCIPALE].
 **Étape 5: Tests d'intégration**
 ```
 ✅ Tests E2E avec Testcontainers
-→ Vérifier: ./mvnw verify
+→ Vérifier: ./gradlew check
 ```
 
 ## 7. Valider avant commit
 
 ```bash
 # Tests complets
-./mvnw clean verify
+./gradlew clean check
 
 # Build Docker
 docker build -t my-service -f docker/Dockerfile .
@@ -243,7 +242,7 @@ Avant de considérer le service "terminé":
 - [ ] Tous les événements Kafka sont gérés
 - [ ] Tests unitaires > 80% couverture
 - [ ] Tests d'intégration passent
-- [ ] `./mvnw clean verify` → SUCCESS
+- [ ] `./gradlew clean check` → SUCCESS
 - [ ] Health checks OK (MongoDB, Redis, Kafka)
 - [ ] Swagger UI complet et fonctionnel
 - [ ] Métriques Prometheus exposées
@@ -263,7 +262,7 @@ Avant de considérer le service "terminé":
 ## 💡 Conseils
 
 1. **Commencez simple**: Implémentez d'abord un endpoint CRUD basique
-2. **Testez fréquemment**: `./mvnw test` après chaque changement
+2. **Testez fréquemment**: `./gradlew test` après chaque changement
 3. **Utilisez Swagger**: Testez vos endpoints directement dans l'UI
 4. **Consultez les logs**: `docker-compose logs -f` pour débugger
 5. **Itérez avec Emergent.sh**: Petites tâches claires et précises
