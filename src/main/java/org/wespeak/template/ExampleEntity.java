@@ -1,4 +1,4 @@
-package org.wespeak.template.model.entity;
+package org.wespeak.template;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

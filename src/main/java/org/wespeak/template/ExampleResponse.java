@@ -1,4 +1,4 @@
-package org.wespeak.template.model.dto;
+package org.wespeak.template;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

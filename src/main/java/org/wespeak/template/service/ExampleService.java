@@ -6,10 +6,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.wespeak.template.exception.ResourceNotFoundException;
-import org.wespeak.template.kafka.producer.ExampleEventProducer;
-import org.wespeak.template.model.dto.CreateExampleRequest;
-import org.wespeak.template.model.dto.ExampleResponse;
-import org.wespeak.template.model.entity.ExampleEntity;
+import org.wespeak.template.CreateExampleRequest;
+import org.wespeak.template.ExampleResponse;
+import org.wespeak.template.ExampleEntity;
 import org.wespeak.template.repository.ExampleRepository;
 
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 public class ExampleService {
 
     private final ExampleRepository repository;
-    private final ExampleEventProducer eventProducer;
 
     @Cacheable(value = "examples", key = "#id")
     public ExampleResponse getById(String id) {
@@ -62,9 +60,6 @@ public class ExampleService {
         ExampleEntity saved = repository.save(entity);
         log.info("Example created with id: {}", saved.getId());
 
-        // Publish event
-        eventProducer.publishExampleCreated(saved);
-
         return toResponse(saved);
     }
 
@@ -76,9 +71,6 @@ public class ExampleService {
         
         repository.delete(entity);
         log.info("Example deleted: {}", id);
-
-        // Publish event
-        eventProducer.publishExampleDeleted(entity);
     }
 
     private ExampleResponse toResponse(ExampleEntity entity) {
