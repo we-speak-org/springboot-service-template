@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '4.0.0'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group = 'org.wespeak'
@@ -152,4 +153,21 @@ tasks.named('bootJar') {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.compilerArgs += ['-parameters']
+}
+
+// Spotless code formatting
+spotless {
+    java {
+        // Use default google-java-format
+        googleJavaFormat()
+        
+        // Remove unused imports
+        removeUnusedImports()
+        
+        // Format additional files
+        target 'src/**/*.java'
+        
+        // Optionally exclude generated code
+        targetExclude 'build/**/*.java'
+    }
 }

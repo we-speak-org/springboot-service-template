@@ -42,8 +42,8 @@ jobs:
       - name: Check code coverage
         run: ./gradlew jacocoTestCoverageVerification --no-daemon
 
-      - name: Run linting
-        run: ./gradlew checkstyleMain checkstyleTest --no-daemon
+      - name: Check code formatting
+        run: ./gradlew spotlessCheck --no-daemon
 
       - name: Build Docker image (no push)
         run: |
