@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -18,15 +19,15 @@ import java.util.Map;
 @Tag(name = "Health", description = "Health and status endpoints")
 public class HealthController {
 
-    private final BuildProperties buildProperties;
+    private final Optional<BuildProperties> buildProperties;
 
     @GetMapping("/health")
     @Operation(summary = "Get service health status")
     public ResponseEntity<Map<String, Object>> health() {
         return ResponseEntity.ok(Map.of(
                 "status", "UP",
-                "service", buildProperties.getName(),
-                "version", buildProperties.getVersion(),
+                "service", buildProperties.map(BuildProperties::getName).orElse("template-service"),
+                "version", buildProperties.map(BuildProperties::getVersion).orElse("dev"),
                 "timestamp", Instant.now()
         ));
     }
@@ -35,9 +36,9 @@ public class HealthController {
     @Operation(summary = "Get service information")
     public ResponseEntity<Map<String, Object>> info() {
         return ResponseEntity.ok(Map.of(
-                "name", buildProperties.getName(),
-                "version", buildProperties.getVersion(),
-                "buildTime", buildProperties.getTime(),
+                "name", buildProperties.map(BuildProperties::getName).orElse("template-service"),
+                "version", buildProperties.map(BuildProperties::getVersion).orElse("dev"),
+                "buildTime", buildProperties.map(BuildProperties::getTime).orElse(Instant.now()),
                 "description", "WeSpeak Microservice Template"
         ));
     }
