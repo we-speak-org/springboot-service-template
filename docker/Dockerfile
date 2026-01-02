@@ -1,14 +1,19 @@
 # Stage 1: Build
-FROM maven:3.9-eclipse-temurin-21 AS build
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-# Copy pom.xml and download dependencies (for better caching)
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Copy Gradle wrapper and build files
+COPY gradle gradle
+COPY gradlew .
+COPY settings.gradle .
+COPY build.gradle .
+
+# Download dependencies (for better caching)
+RUN ./gradlew dependencies --no-daemon
 
 # Copy source code and build
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN ./gradlew bootJar --no-daemon -x test
 
 # Stage 2: Runtime
 FROM eclipse-temurin:21-jre-alpine
@@ -19,7 +24,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
 # Copy jar from build stage
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 # Expose port
 EXPOSE 8080
