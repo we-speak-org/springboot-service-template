@@ -480,3 +480,4 @@ Pour toute question ou problème avec ce template:
 **Version**: 1.0.0  
 **Maintenu par**: WeSpeak Team  
 **License**: MIT
+
