@@ -11,7 +11,7 @@ Ce template fournit une base prête à l'emploi pour créer un nouveau microserv
 ### Core Framework
 - **Spring Boot 4.0.x** - Framework de base
 - **Java 21** - Version LTS
-- **Gradle 8.5** - Gestion des dépendances
+- **Gradle 9.2.1** - Gestion des dépendances
 - **MongoDB** - Base de données unifiée
 - **Spring Data MongoDB** - Accès aux données
 
@@ -21,9 +21,11 @@ Ce template fournit une base prête à l'emploi pour créer un nouveau microserv
 - **Validation** - Bean Validation avec annotations
 
 ### Messaging & Events
-- **Spring Kafka** - Consumer/Producer Kafka
+- **Spring Cloud Stream** - Style fonctionnel avec Consumer/Function beans
+- **Kafka Binder** - Intégration Kafka
+- **CloudEvent Pattern** - Format d'événement standardisé
 - **Avro** - Sérialisation des messages
-- **Event-Driven patterns** - Event sourcing ready
+- **DLQ Support** - Dead Letter Queue pour messages en échec
 
 ### Cache & Performance
 - **Spring Cache** - Abstraction de cache
@@ -41,6 +43,10 @@ Ce template fournit une base prête à l'emploi pour créer un nouveau microserv
 - **Logback** - Logging structuré (JSON)
 - **MDC Context** - Correlation IDs pour tracing
 
+### Code Quality
+- **Spotless** - Formatage automatique (Google Java Format)
+- **Lombok** - Réduction du boilerplate
+
 ### Testing
 - **JUnit 5** - Framework de tests
 - **Mockito** - Mocking
@@ -49,7 +55,7 @@ Ce template fournit une base prête à l'emploi pour créer un nouveau microserv
 
 ### DevOps
 - **Dockerfile multi-stage** - Build optimisé
-- **GitHub Actions workflow** - CI/CD automatisé
+- **GitHub Actions workflow** - CI/CD automatisé (PR check + publish)
 - **Docker Compose** - Environnement de développement local
 - **Health checks** - Prêt pour production
 
@@ -62,9 +68,6 @@ springboot-service-template/
 │   │   ├── java/
 │   │   │   └── org/wespeak/template/
 │   │   │       ├── config/           # Configurations Spring
-│   │   │       │   ├── KafkaConfig.java
-│   │   │       │   ├── MongoConfig.java
-│   │   │       │   ├── RedisConfig.java
 │   │   │       │   ├── SecurityConfig.java
 │   │   │       │   └── OpenApiConfig.java
 │   │   │       ├── controller/       # REST Controllers
@@ -74,17 +77,18 @@ springboot-service-template/
 │   │   │       │   └── dto/
 │   │   │       ├── repository/       # MongoDB Repositories
 │   │   │       ├── service/          # Business Logic
-│   │   │       ├── kafka/            # Kafka Producers/Consumers
-│   │   │       │   ├── producer/
-│   │   │       │   └── consumer/
+│   │   │       │   └── SampleService.java
+│   │   │       ├── messaging/        # Event listeners (Spring Cloud Stream)
+│   │   │       │   ├── CloudEvent.java       # CloudEvent DTO
+│   │   │       │   └── EventListeners.java   # Functional listeners
 │   │   │       ├── exception/        # Exception handling
 │   │   │       │   └── GlobalExceptionHandler.java
 │   │   │       └── TemplateApplication.java
 │   │   └── resources/
-│   │       ├── application.yml       # Configuration principale
-│   │       ├── application-dev.yml   # Config développement
-│   │       ├── application-prod.yml  # Config production
-│   │       └── logback-spring.xml    # Configuration logs
+│   │       ├── application.properties       # Configuration principale
+│   │       ├── application-dev.properties   # Config développement
+│   │       ├── application-prod.properties  # Config production
+│   │       └── logback-spring.xml          # Configuration logs
 │   └── test/
 │       └── java/
 │           └── org/wespeak/template/

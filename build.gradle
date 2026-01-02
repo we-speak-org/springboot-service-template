@@ -51,8 +51,9 @@ dependencies {
     // Caffeine Local Cache
     implementation 'com.github.ben-manes.caffeine:caffeine'
     
-    // Kafka
-    implementation 'org.springframework.kafka:spring-kafka'
+    // Spring Cloud Stream with Kafka
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
     
     // Avro Serialization
     implementation "org.apache.avro:avro:${avroVersion}"
