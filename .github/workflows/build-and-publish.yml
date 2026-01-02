@@ -30,13 +30,16 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./mvnw clean test
+        run: ./gradlew clean test
 
       - name: Run integration tests
-        run: ./mvnw verify
+        run: ./gradlew integrationTest
 
   build-and-push:
     needs: test
@@ -53,10 +56,13 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
 
-      - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
