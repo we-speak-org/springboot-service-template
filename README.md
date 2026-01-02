@@ -370,12 +370,12 @@ curl http://localhost:8081/actuator/prometheus
 
 ### Tests unitaires
 ```bash
-./mvnw test
+./gradlew test
 ```
 
 ### Tests d'intégration (avec Testcontainers)
 ```bash
-./mvnw verify
+./gradlew integrationTest
 ```
 
 ### Test de l'API
